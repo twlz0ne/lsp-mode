@@ -398,6 +398,21 @@ PARAMS progress report notification data."
                   :priority -1
                   :server-id 'ocaml-ls))
 
+(defcustom lsp-reason-lang-server-command
+  `(,(expand-file-name "~/.emacs.d/reason-language-server/reason-language-server.exe"))
+  "The command that starts the language server."
+  :group 'lsp-reason
+  :type '(choice
+          (string :tag "Single string value")
+          (repeat :tag "List of string values"
+                  string)))
+
+(lsp-register-client
+ (make-lsp-client :new-connection (lsp-stdio-connection
+                                   (-const lsp-reason-lang-server-command))
+                  :major-modes '(reason-mode)
+                  :server-id 'reason-ls))
+
 
 ;; C-family (C, C++, Objective-C, Objective-C++)
 
